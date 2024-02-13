@@ -10,8 +10,15 @@ import GridComponent from "./GridComponent";
 import { VideoView } from "@whereby.com/browser-sdk";
 import CircleVideo from "./components/Circle";
 import useComControl from "./communication";
-import { IoMicOff } from "react-icons/io5";
+import { IoMicOff,IoStar } from "react-icons/io5";
 import "./styles.css"
+
+// Extend the Window interface
+declare global {
+  interface Window {
+    initializeFunction?: () => void; // Use optional property to avoid issues when the function is not set
+  }
+}
 
 export default function Start({ roomUrl, displayName, isTeacher }: { roomUrl: string; displayName: string; isTeacher:boolean }) {
 
@@ -324,7 +331,20 @@ const { state: comState, actions: comActions } = useComControl(
     if(isTeacher){setIframe(inputValue);}
   };
 
- 
+  useEffect(() => {
+    // Define the function you want to expose
+    const initializeFunction = () => {
+      alert('Function called from initializeFunction');
+    };
+
+    // Attach the function to the window object for global access
+    window.initializeFunction = initializeFunction;
+
+    // Cleanup by removing the function from the window object when the component unmounts
+    return () => {
+      delete window.initializeFunction;
+    };
+  }, []);
   //------- end from peer
 
   return (
@@ -445,6 +465,19 @@ const { state: comState, actions: comActions } = useComControl(
     >
       <IframeComponent currentUrl={currentIframe}/>
     </Flex>
+    <Center>
+          {localStream && (
+              <DeviceControls
+              desktop={desktop}
+              floating={true}
+              videoAllowed={myVideoPermission}
+              audioAllowed={myAudioPermission}
+              toggleCameraEnabled={toggleCameraEnabled}
+              toggleMicrophoneEnabled={AudioToggle}
+              localStream={localStream}
+              />
+          )}
+        </Center>
   {/* mypage ends here */}
   </Flex> 
       ) : (
@@ -466,30 +499,61 @@ const { state: comState, actions: comActions } = useComControl(
               // onMouseEnter={handleMouseEnter}
               // onMouseLeave={initiateFadeOut}
             >
-              <Box
-                borderWidth={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("10px"):("0px")}
-                borderRadius={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("50%"):("0px")}
-                borderColor={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("yellow"):("none")}
-              >
-              <div ref={selfDivRef} style={selfDivStyle} className="self-div">
-                {/* Conditionally render local participant's video */}
-                {localStream && (
-                  <VideoView muted stream={localStream} />
-                )}
-              </div>
-              </Box>
-              {!myAudioStatusChanged?( ///--------------------micoff icon
+              {/* <Box
+                background={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("yellow"):("none")}
+                // borderWidth={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("8px"):("0px")}
+                borderRadius={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("10%"):("0px")}
+                // borderColor={spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?("yellow"):("none")}
+                // overflow="hidden"
+                height="100%"
+                width="100%"
+                position="absolute"
+              ></Box> */}
+                <div ref={selfDivRef} style={selfDivStyle} className="self-div">
+                  {/* Conditionally render local participant's video */}
+                  {localStream && (
+                    <VideoView muted stream={localStream} />
+                  )}
+                </div>
+              {spotLitIds && localParticipant && spotLitIds.includes(localParticipant.id)?( ///--------------------spotlit icon
                 <Icon //muted icon
-                  as={IoMicOff} 
+                  as={IoStar} 
                   position="absolute" 
                   zIndex="1" 
-                  // bottom="25%" 
-                  // right="25%" 
-                  color="red.500" 
+                  top="-15%" 
+                  left="-30%" 
+                  color="yellow" 
+                  margin="2"
                   boxSize="50%" 
                   style={{ opacity: 0.6 }}
                 />):null
               }
+              {!myAudioStatusChanged?( ///--------------------micoff icon
+                <Icon //muted icon
+                  as={IoMicOff} 
+                  position="absolute" 
+                  zIndex="2" 
+                  top="0" 
+                  right="0" 
+                  color="red.500" 
+                  boxSize="40%" 
+                  margin="2"
+                  style={{ opacity: 0.7 }}
+                />):null
+              }
+              <Center>
+              {localStream && (
+                  <DeviceControls
+                  desktop={desktop}
+                  floating={true}
+                  videoAllowed={myVideoPermission}
+                  audioAllowed={myAudioPermission}
+                  toggleCameraEnabled={toggleCameraEnabled}
+                  toggleMicrophoneEnabled={AudioToggle}
+                  localStream={localStream}
+                  />
+              )}
+            </Center>
               {/* Conditionally render buttons based on showButtons state
               {showButtons && (
                 <div
@@ -533,20 +597,9 @@ const { state: comState, actions: comActions } = useComControl(
             )}
         </Center> */}
         </div>
-      )}        
-      <Center>
-          {localStream && (
-              <DeviceControls
-              desktop={desktop}
-              floating={true}
-              videoAllowed={myVideoPermission}
-              audioAllowed={myAudioPermission}
-              toggleCameraEnabled={toggleCameraEnabled}
-              toggleMicrophoneEnabled={AudioToggle}
-              localStream={localStream}
-              />
-          )}
-        </Center>
+      )}  
+      {/* here center */}
+      
     </Flex>
   );
 }

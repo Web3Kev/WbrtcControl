@@ -47,14 +47,18 @@ export default function DeviceControls({
     {
       styles = {
         width:"85px",
+        // minWidth:"85px",
         height:"40px",
-        padding:"2px",
+        // padding:"2px",
         position: "absolute",
         // background:"orange",
         borderRadius:"10px",
-        top: "110px",
+        bottom:"-3",
+        marginRight:"100%",
+   
+        // top: "110px",
         // left: 0,
-        right: "2%",
+        // right: 0,
       };
     }
   }
