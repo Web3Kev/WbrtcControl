@@ -11,17 +11,17 @@ function AppHelp() {
       width={"100%"}
       height={"100%"}
     >
-      <Heading mb={"4"}>Missing game parameters</Heading>
+      <Heading mb={"4"}>Missing parameters</Heading>
       <Text mb={"2"}>
-        To play the quiz game, please provide a valid url to an{" "}
+        to use the webapp, please provide a valid url to an{" "}
         <strong>UNLOCKED</strong> Whereby room created on the Embedded plan.
       </Text>
       <Code>{window.location.href}?roomUrl=&lt;whereby_room_url&gt;</Code>
       <Text mt={"4"} mb={"2"}>
-        To join as the quiz master, please also include
+        To join as master, please also include
       </Text>
       <Code>
-        {window.location.href}?roomUrl=&lt;whereby_room_url&gt;&quizMaster=true
+        {window.location.href}?roomUrl=&lt;whereby_room_url&gt;&master=true
       </Code>
     </Box>
   );

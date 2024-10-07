@@ -12,7 +12,7 @@ import AppHelp from "./AppHelp";
 const urlParams = new URLSearchParams(window.location.search);
 const roomUrl = urlParams.get("roomUrl") || WHEREBY_ROOM;
 const playerName = urlParams.get("fname") || "guest";
-const isTeacher = !!urlParams.get("quizMaster");
+const isTeacher = !!urlParams.get("master");
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
