@@ -1,7 +1,7 @@
 {
-  "name": "peliopi",
+  "name": "webrtc",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "homepage": "https://web3kev.github.io/",
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
