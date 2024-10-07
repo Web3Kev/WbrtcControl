@@ -2,7 +2,7 @@
   "name": "webrtc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://web3kev.github.io/",
+  "homepage": "https://web3kev.github.io/WbrtcControl/",
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
