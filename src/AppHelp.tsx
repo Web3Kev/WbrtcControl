@@ -13,7 +13,7 @@ function AppHelp() {
     >
       <Heading mb={"4"}>Missing game parameters</Heading>
       <Text mb={"2"}>
-        To play the quiz game, please provide a valid url to an{" "}
+        To play this WebApp, please provide a valid url to an{" "}
         <strong>UNLOCKED</strong> Whereby room created on the Embedded plan.
       </Text>
       <Code>{window.location.href}?roomUrl=&lt;whereby_room_url&gt;</Code>
