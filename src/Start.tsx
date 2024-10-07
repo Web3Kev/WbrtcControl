@@ -333,12 +333,13 @@ const { state: comState, actions: comActions } = useComControl(
 
   useEffect(() => {
     // Define the function you want to expose
-    const initializeFunction = () => {
+    const identify = () => {
       alert('Function called from initializeFunction');
+      window.location.href = "uniwebview://webLessonReact?status=true";
     };
 
     // Attach the function to the window object for global access
-    window.initializeFunction = initializeFunction;
+    window.initializeFunction = identify;
 
     // Cleanup by removing the function from the window object when the component unmounts
     return () => {
